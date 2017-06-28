@@ -37,6 +37,14 @@ class Types
 	/**
 	 * @return \Closure
 	 */
+	public static function boolean(): \Closure
+	{
+		return \Closure::fromCallable('is_bool');
+	}
+
+	/**
+	 * @return \Closure
+	 */
 	public static function array(): \Closure
 	{
 		return \Closure::fromCallable('is_array');
