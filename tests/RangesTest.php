@@ -20,16 +20,19 @@ class RangesTest extends TestCase
 		Ranges::stringWithLengthBetween(0, 0);
 
 		$closure = Ranges::stringWithLengthBetween(0, 1);
+		self::assertTrue($closure(''));
 		self::assertTrue($closure('a'));
 		self::assertFalse($closure('aaa'));
 		self::assertFalse($closure('aaaaa'));
 
 		$closure = Ranges::stringWithLengthBetween(0, 5);
+		self::assertTrue($closure(''));
 		self::assertTrue($closure('a'));
 		self::assertTrue($closure('aaa'));
 		self::assertTrue($closure('aaaaa'));
 
 		$closure = Ranges::stringWithLengthBetween(2, 4);
+		self::assertFalse($closure(''));
 		self::assertFalse($closure('a'));
 		self::assertTrue($closure('aaa'));
 		self::assertFalse($closure('aaaaa'));
