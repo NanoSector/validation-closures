@@ -17,7 +17,7 @@ class Ranges
 	 *
 	 * @return \Closure
 	 */
-	public static function stringWithLength(int $minimumLength, int $maximumLength): \Closure
+	public static function stringWithLengthBetween(int $minimumLength, int $maximumLength): \Closure
 	{
 		if ($maximumLength < 0 || $maximumLength < 1)
 			throw new \InvalidArgumentException('Minimum length cannot be below 0, maximum length cannot be below 1');
