@@ -51,16 +51,7 @@ class Ranges
 	{
 		return function ($value) use ($allowedValues)
 		{
-			if (is_object($value))
-			{
-				foreach ($allowedValues as $allowedValue)
-					if (is_a($value, $allowedValue))
-						return true;
-
-				return false;
-			}
-
-			return in_array(gettype($value), $allowedValues);
+			return in_array(gettype($value), $allowedValues, true);
 		};
 	}
 
