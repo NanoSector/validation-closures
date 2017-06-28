@@ -34,6 +34,7 @@ class RangesTest extends TestCase
 		$closure = Ranges::stringWithLengthBetween(2, 4);
 		self::assertFalse($closure(''));
 		self::assertFalse($closure('a'));
+		self::assertTrue($closure('aa'));
 		self::assertTrue($closure('aaa'));
 		self::assertFalse($closure('aaaaa'));
 	}
