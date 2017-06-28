@@ -1,0 +1,25 @@
+{
+    "name": "yoshi2889/validation-closures",
+    "description": "Closures useful for validating data. Provides type validation amongst other filters.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ValidationClosures\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Yoshi2889",
+            "email": "rick.2889@gmail.com",
+            "homepage": "https://nanosector.nl",
+            "role": "Lead Developer"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^6.2"
+    }
+}
