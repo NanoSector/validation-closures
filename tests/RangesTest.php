@@ -62,20 +62,20 @@ class RangesTest extends TestCase
 
 	public function testEnum()
 	{
-		$closure = Ranges::enum(['string', 'double']);
+		$closure = Ranges::enum('string', 'double');
 
 		self::assertFalse($closure(10));
 		self::assertTrue($closure('test'));
 		self::assertTrue($closure(1.2));
 		self::assertFalse($closure(false));
 		self::assertFalse($closure([ ]));
-		self::assertFalse($closure('in_array'));
+		self::assertTrue($closure('in_array'));
 		self::assertFalse($closure(new stdClass()));
 	}
 
 	public function testStringOneOf()
 	{
-		$closure = Ranges::stringOneOf(['test', 'ing']);
+		$closure = Ranges::stringOneOf('test', 'ing');
 
 		self::assertTrue($closure('test'));
 		self::assertTrue($closure('ing'));
