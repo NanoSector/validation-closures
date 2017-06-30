@@ -14,6 +14,8 @@ class UtilsTest extends TestCase
 	public function testInvert()
 	{
 		$closure = \ValidationClosures\Types::string();
+
+		// This should become equal to Types::notString()
 		$invertedClosure = Utils::invert($closure);
 
 		self::assertTrue($invertedClosure(10));

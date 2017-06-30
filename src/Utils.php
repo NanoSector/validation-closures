@@ -12,7 +12,7 @@ class Utils
 {
 	public static function invert(\Closure $closure)
 	{
-		return function (string $value) use ($closure)
+		return function ($value) use ($closure)
 		{
 			return !$closure($value);
 		};
