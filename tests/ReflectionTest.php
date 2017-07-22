@@ -25,6 +25,7 @@ class ReflectionTest extends TestCase
 	public function testCallStaticMagicMethod()
 	{
 		self::assertFalse(Reflection::isInterface()(stdClass::class));
+		self::assertFalse(Reflection::isInterface()(10));
 		self::assertTrue(Reflection::isInstance(new stdClass())(stdClass::class));
 
 		$this->expectException(\InvalidArgumentException::class);
