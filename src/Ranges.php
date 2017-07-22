@@ -43,6 +43,20 @@ class Ranges
 	}
 
 	/**
+	 * @param float $minimum
+	 * @param float $maximum
+	 *
+	 * @return \Closure
+	 */
+	public static function floatBetween(float $minimum, float $maximum): \Closure
+	{
+		return function ($value) use ($minimum, $maximum)
+		{
+			return Types::float()($value) && ($value >= $minimum && $value <= $maximum);
+		};
+	}
+
+	/**
 	 * @param array ...$allowedValues
 	 *
 	 * @return \Closure

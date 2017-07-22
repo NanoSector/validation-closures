@@ -64,7 +64,6 @@ class RangesTest extends TestCase
 		self::assertFalse($closure('in_array'));
 		self::assertFalse($closure(new stdClass()));
 
-		$closure = Ranges::intBetween(0, 3);
 		self::assertFalse($closure(-3));
 		self::assertFalse($closure(-2));
 		self::assertFalse($closure(-1));
@@ -85,6 +84,42 @@ class RangesTest extends TestCase
 		self::assertFalse($closure(3));
 		self::assertFalse($closure(4));
 		self::assertFalse($closure(5));
+	}
+
+	public function testFloatBetween()
+	{
+		$closure = Ranges::floatBetween(0.0, 3.0);
+		self::assertFalse($closure(2));
+		self::assertFalse($closure('test'));
+		self::assertTrue($closure(1.2));
+		self::assertFalse($closure(false));
+		self::assertFalse($closure([ ]));
+		self::assertFalse($closure('in_array'));
+		self::assertFalse($closure(new stdClass()));
+
+		self::assertFalse($closure(-3.0));
+		self::assertFalse($closure(-2.0));
+		self::assertFalse($closure(-1.0));
+		self::assertTrue($closure(0.0));
+		self::assertTrue($closure(1.0));
+		self::assertTrue($closure(2.0));
+		self::assertTrue($closure(3.0));
+		self::assertFalse($closure(3.1));
+		self::assertFalse($closure(4.0));
+		self::assertFalse($closure(5.0));
+
+		$closure = Ranges::floatBetween(-2.0, 2.0);
+		self::assertFalse($closure(-3.0));
+		self::assertFalse($closure(-2.1));
+		self::assertTrue($closure(-2.0));
+		self::assertTrue($closure(-1.0));
+		self::assertTrue($closure(0.0));
+		self::assertTrue($closure(1.0));
+		self::assertTrue($closure(2.0));
+		self::assertFalse($closure(2.1));
+		self::assertFalse($closure(3.0));
+		self::assertFalse($closure(4.0));
+		self::assertFalse($closure(5.0));
 	}
 
 	public function testEnum()
