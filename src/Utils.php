@@ -10,6 +10,11 @@ namespace ValidationClosures;
 
 class Utils
 {
+	/**
+	 * @param \Closure $closure
+	 *
+	 * @return \Closure
+	 */
 	public static function invert(\Closure $closure)
 	{
 		return function ($value) use ($closure)
