@@ -51,7 +51,20 @@ class Ranges
 	{
 		return function ($value) use ($allowedValues)
 		{
-			return in_array(gettype($value), $allowedValues, true);
+			return in_array($value, $allowedValues, true);
+		};
+	}
+
+	/**
+	 * @param array ...$allowedTypes
+	 *
+	 * @return \Closure
+	 */
+	public static function typeEnum(...$allowedTypes): \Closure
+	{
+		return function ($value) use ($allowedTypes)
+		{
+			return in_array(gettype($value), $allowedTypes, true);
 		};
 	}
 
