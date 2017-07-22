@@ -13,11 +13,14 @@ class RangesTest extends TestCase
 {
 	public function testStringWithLengthBetween()
 	{
-		$this->expectException(InvalidArgumentException::class);
-		Ranges::stringWithLengthBetween(-1, 0);
-
-		$this->expectException(InvalidArgumentException::class);
-		Ranges::stringWithLengthBetween(0, 0);
+		$closure = Ranges::stringWithLengthBetween(0, 10);
+		self::assertFalse($closure(5));
+		self::assertTrue($closure('test'));
+		self::assertFalse($closure(1.2));
+		self::assertFalse($closure(false));
+		self::assertFalse($closure([ ]));
+		self::assertTrue($closure('in_array'));
+		self::assertFalse($closure(new stdClass()));
 
 		$closure = Ranges::stringWithLengthBetween(0, 1);
 		self::assertTrue($closure(''));
@@ -26,12 +29,14 @@ class RangesTest extends TestCase
 		self::assertFalse($closure('aaaaa'));
 
 		$closure = Ranges::stringWithLengthBetween(0, 5);
+		self::assertFalse($closure(5));
 		self::assertTrue($closure(''));
 		self::assertTrue($closure('a'));
 		self::assertTrue($closure('aaa'));
 		self::assertTrue($closure('aaaaa'));
 
 		$closure = Ranges::stringWithLengthBetween(2, 4);
+		self::assertFalse($closure(5));
 		self::assertFalse($closure(''));
 		self::assertFalse($closure('a'));
 		self::assertTrue($closure('aa'));
@@ -39,8 +44,26 @@ class RangesTest extends TestCase
 		self::assertFalse($closure('aaaaa'));
 	}
 
+	public function testStringWithLengthBetween_InvalidParams()
+	{
+		$this->expectException(InvalidArgumentException::class);
+		Ranges::stringWithLengthBetween(-1, 0);
+
+		$this->expectException(InvalidArgumentException::class);
+		Ranges::stringWithLengthBetween(0, 0);
+	}
+
 	public function testIntBetween()
 	{
+		$closure = Ranges::intBetween(0, 3);
+		self::assertTrue($closure(2));
+		self::assertFalse($closure('test'));
+		self::assertFalse($closure(1.2));
+		self::assertFalse($closure(false));
+		self::assertFalse($closure([ ]));
+		self::assertFalse($closure('in_array'));
+		self::assertFalse($closure(new stdClass()));
+
 		$closure = Ranges::intBetween(0, 3);
 		self::assertFalse($closure(-3));
 		self::assertFalse($closure(-2));
@@ -93,10 +116,23 @@ class RangesTest extends TestCase
 	public function testStringOneOf()
 	{
 		$closure = Ranges::stringOneOf('test', 'ing');
+		self::assertFalse($closure(10));
+		self::assertTrue($closure('test'));
+		self::assertFalse($closure(1.2));
+		self::assertFalse($closure(false));
+		self::assertFalse($closure([]));
+		self::assertFalse($closure('in_array'));
+		self::assertFalse($closure(new stdClass()));
 
 		self::assertTrue($closure('test'));
 		self::assertTrue($closure('ing'));
 		self::assertFalse($closure('something else'));
 		self::assertFalse($closure(' '));
+	}
+
+	public function testStringOneOf_InvalidParams()
+	{
+		self::expectException(\InvalidArgumentException::class);
+		Ranges::stringOneOf(10, 'test');
 	}
 }
