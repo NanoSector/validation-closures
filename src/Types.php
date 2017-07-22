@@ -67,11 +67,11 @@ class Types
 	}
 
 	/**
-	 * @param $class
+	 * @param string $class
 	 *
 	 * @return \Closure
 	 */
-	public static function instanceof($class): \Closure
+	public static function instanceof(string $class): \Closure
 	{
 		return function ($value) use ($class)
 		{
