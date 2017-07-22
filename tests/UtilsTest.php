@@ -26,4 +26,45 @@ class UtilsTest extends TestCase
 		self::assertFalse($invertedClosure('in_array'));
 		self::assertTrue($invertedClosure(new stdClass()));
 	}
+
+	public function testMerge()
+	{
+		$closure1 = \ValidationClosures\Types::int();
+		$closure2 = \ValidationClosures\Ranges::stringWithLengthBetween(2, 10);
+
+		$mergedClosure = Utils::merge($closure1, $closure2);
+
+		self::assertTrue($mergedClosure(10));
+		self::assertTrue($mergedClosure('test'));
+		self::assertFalse($mergedClosure(1.2));
+		self::assertFalse($mergedClosure(false));
+		self::assertFalse($mergedClosure([ ]));
+		self::assertTrue($mergedClosure('in_array'));
+		self::assertFalse($mergedClosure(new stdClass()));
+	}
+
+	public function testBoth()
+	{
+		$closure1 = \ValidationClosures\Ranges::stringOneOf('test', 'testing', 'te');
+		$closure2 = \ValidationClosures\Ranges::stringWithLengthBetween(2, 10);
+
+		$mergedClosure = Utils::both($closure1, $closure2);
+
+		self::assertFalse($mergedClosure(10));
+		self::assertTrue($mergedClosure('test'));
+		self::assertFalse($mergedClosure(1.2));
+		self::assertFalse($mergedClosure(false));
+		self::assertFalse($mergedClosure([ ]));
+		self::assertFalse($mergedClosure('in_array'));
+		self::assertFalse($mergedClosure(new stdClass()));
+	}
+
+	public function testValidateArray()
+	{
+		$array = ['string', 'another string', 'a third string'];
+		self::assertTrue(Utils::validateArray(\ValidationClosures\Types::string(), $array));
+
+		$array = ['string', 'another string', 'a third string', 10];
+		self::assertFalse(Utils::validateArray(\ValidationClosures\Types::string(), $array));
+	}
 }

@@ -22,4 +22,47 @@ class Utils
 			return !$closure($value);
 		};
 	}
+
+	/**
+	 * @param \Closure $closure1
+	 * @param \Closure $closure2
+	 *
+	 * @return \Closure
+	 */
+	public static function merge(\Closure $closure1, \Closure $closure2)
+	{
+		return function ($value) use ($closure1, $closure2)
+		{
+			return $closure1($value) || $closure2($value);
+		};
+	}
+
+	/**
+	 * @param \Closure $closure1
+	 * @param \Closure $closure2
+	 *
+	 * @return \Closure
+	 */
+	public static function both(\Closure $closure1, \Closure $closure2)
+	{
+		return function ($value) use ($closure1, $closure2)
+		{
+			return $closure1($value) && $closure2($value);
+		};
+	}
+
+	/**
+	 * @param \Closure $closure
+	 * @param array $values
+	 *
+	 * @return bool
+	 */
+	public static function validateArray(\Closure $closure, array $values): bool
+	{
+		foreach ($values as $value)
+			if (!$closure($value))
+				return false;
+
+		return true;
+	}
 }
