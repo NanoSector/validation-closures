@@ -22,9 +22,9 @@ class Ranges
 		if ($maximumLength < 0 || $maximumLength < 1)
 			throw new \InvalidArgumentException('Minimum length cannot be below 0, maximum length cannot be below 1');
 
-		return function (string $value) use ($minimumLength, $maximumLength)
+		return function ($value) use ($minimumLength, $maximumLength)
 		{
-			return strlen($value) >= $minimumLength && strlen($value) <= $maximumLength;
+			return Types::string()($value) && static::intBetween($minimumLength, $maximumLength)(strlen($value));
 		};
 	}
 
@@ -36,9 +36,9 @@ class Ranges
 	 */
 	public static function intBetween(int $minimum, int $maximum): \Closure
 	{
-		return function (int $value) use ($minimum, $maximum)
+		return function ($value) use ($minimum, $maximum)
 		{
-			return $value >= $minimum && $value <= $maximum;
+			return Types::int()($value) && ($value >= $minimum && $value <= $maximum);
 		};
 	}
 
@@ -75,9 +75,12 @@ class Ranges
 	 */
 	public static function stringOneOf(...$allowedValues): \Closure
 	{
-		return function (string $value) use ($allowedValues)
+		if (!Utils::validateArray(Types::string(), $allowedValues))
+			throw new \InvalidArgumentException('Ranges::stringOneOf expects arguments of type string only');
+
+		return function ($value) use ($allowedValues)
 		{
-			return in_array($value, $allowedValues);
+			return Types::string() && in_array($value, $allowedValues);
 		};
 	}
 }
