@@ -15,7 +15,7 @@ class Utils
 	 *
 	 * @return \Closure
 	 */
-	public static function invert(\Closure $closure)
+	public static function invert(\Closure $closure): \Closure
 	{
 		return function ($value) use ($closure)
 		{
@@ -29,7 +29,7 @@ class Utils
 	 *
 	 * @return \Closure
 	 */
-	public static function merge(\Closure $closure1, \Closure $closure2)
+	public static function merge(\Closure $closure1, \Closure $closure2): \Closure
 	{
 		return function ($value) use ($closure1, $closure2)
 		{
@@ -43,7 +43,7 @@ class Utils
 	 *
 	 * @return \Closure
 	 */
-	public static function both(\Closure $closure1, \Closure $closure2)
+	public static function both(\Closure $closure1, \Closure $closure2): \Closure
 	{
 		return function ($value) use ($closure1, $closure2)
 		{
