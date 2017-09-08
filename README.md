@@ -33,7 +33,9 @@ The Ranges class contains methods to check if values are within a range. It cont
 * `stringWithLengthBetween(int $minimumLength, int $maximumLength)`: Test if a given string has a length within the range
 `$minimumLength <= length <= $maximumLength`
 * `intBetween(int $minimum, int $maximum)`: Test if a given int is inside the range of `$minimum <= int <= $maximum`
+* `intBetweenExclusive(int $minimum, int $maximum)`: Test if a given int is inside the range of `$minimum < int < $maximum`
 * `floatBetween(float $minimum, float $maximum)`: Identical to `intBetween`, except it tests on floats.
+* `floatBetweenExclusive(float $minimum, float $maximum)`: Identical to `intBetweenExclusive`, except it tests on floats.
 * `enum(...$allowedValues)`: Test if a given value exists inside `$allowedValues`, similar to an Enum type in other languages.
 * `typeEnum(...$allowedTypes)`: Test if a given value is of a type inside `$allowedTypes`.
 * `stringOneOf(...$allowedValues)`: Test if a given string exists inside `$allowedValues`.
@@ -58,6 +60,7 @@ The Types class contains methods to use for type validation. It contains the fol
 * `array()`: Test if a given value is an array.
 * `callable()`: Test if a given value is a callable function/method.
 * `object()`: Test if a given value is an instantiated object.
+* `numeric()`: Test if a given value is a numeric value. (see [is_numeric](https://secure.php.net/manual/en/function.is-numeric.php) in the PHP manual for details)
 * `instanceof(string $class)`: Test if a given value is an instance of the given class.
 
 ### Utils
@@ -68,6 +71,8 @@ The Utils class contains methods to manipulate closures. It contains the followi
 or both closures resolve(s) to true.
 * `both(\Closure $closure1, \Closure $closure2): \Closure`: Merge two closures together. The resulting closure will return true only if **both**
 closures resolve to true.
+* `validateArray(\Closure $closure, array $values): bool`: Tests if all values in a given array validate with the given closure.
+Returns false if 1 or more values do not validate, returns true if all elements validate.
 
 ## License
 This code is released under the MIT License. Please see `LICENSE` to read it.
