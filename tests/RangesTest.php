@@ -84,6 +84,9 @@ class RangesTest extends TestCase
 		self::assertFalse($closure(3));
 		self::assertFalse($closure(4));
 		self::assertFalse($closure(5));
+		
+		self::expectException(\InvalidArgumentException::class);
+		Ranges::intBetween(5, 3);
 	}
 
     public function testIntBetweenExclusive()
@@ -117,6 +120,9 @@ class RangesTest extends TestCase
         self::assertFalse($closure(3));
         self::assertFalse($closure(4));
         self::assertFalse($closure(5));
+
+        self::expectException(\InvalidArgumentException::class);
+        Ranges::intBetweenExclusive(5, 3);
     }
 
 	public function testFloatBetween()
@@ -153,6 +159,9 @@ class RangesTest extends TestCase
 		self::assertFalse($closure(3.0));
 		self::assertFalse($closure(4.0));
 		self::assertFalse($closure(5.0));
+
+        self::expectException(\InvalidArgumentException::class);
+        Ranges::floatBetween(5.0, 3.0);
 	}
 
     public function testFloatBetweenExclusive()
@@ -193,6 +202,9 @@ class RangesTest extends TestCase
         self::assertFalse($closure(3.0));
         self::assertFalse($closure(4.0));
         self::assertFalse($closure(5.0));
+
+        self::expectException(\InvalidArgumentException::class);
+        Ranges::floatBetweenExclusive(5.0, 3.0);
     }
 
 	public function testEnum()
