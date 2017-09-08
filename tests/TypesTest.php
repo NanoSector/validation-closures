@@ -103,6 +103,19 @@ class TypesTest extends TestCase
 		self::assertTrue($closure(new stdClass()));
 	}
 
+    public function testNumeric()
+    {
+        $closure = Types::numeric();
+
+        self::assertTrue($closure(10));
+        self::assertFalse($closure('test'));
+        self::assertTrue($closure(1.2));
+        self::assertFalse($closure(false));
+        self::assertFalse($closure([ ]));
+        self::assertFalse($closure('in_array'));
+        self::assertFalse($closure(new stdClass()));
+	}
+
 	public function testInstanceOf()
 	{
 		$closure = Types::instanceof(Types::class);
