@@ -66,6 +66,14 @@ class Types
 		return \Closure::fromCallable('is_object');
 	}
 
+    /**
+     * @return \Closure
+     */
+    public static function numeric(): \Closure
+    {
+        return \Closure::fromCallable('is_numeric');
+	}
+
 	/**
 	 * @param string $class
 	 *
