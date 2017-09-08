@@ -42,6 +42,20 @@ class Ranges
 		};
 	}
 
+    /**
+     * @param int $minimum
+     * @param int $maximum
+     *
+     * @return \Closure
+     */
+    public static function intBetweenExclusive(int $minimum, int $maximum): \Closure
+    {
+        return function ($value) use ($minimum, $maximum)
+        {
+            return Types::int()($value) && ($value > $minimum && $value < $maximum);
+        };
+	}
+
 	/**
 	 * @param float $minimum
 	 * @param float $maximum
@@ -54,6 +68,23 @@ class Ranges
 		{
 			return Types::float()($value) && ($value >= $minimum && $value <= $maximum);
 		};
+	}
+
+    /**
+     * @param float $minimum
+     * @param float $maximum
+     *
+     * @return \Closure
+     */
+    public static function floatBetweenExclusive(float $minimum, float $maximum): \Closure
+    {
+        if ($maximum <= $minimum)
+            throw new \InvalidArgumentException('Maximum can not be lesser than or equal to minimum.');
+        
+        return function ($value) use ($minimum, $maximum)
+        {
+            return Types::float()($value) && ($value > $minimum && $value < $maximum);
+        };
 	}
 
 	/**

@@ -86,6 +86,39 @@ class RangesTest extends TestCase
 		self::assertFalse($closure(5));
 	}
 
+    public function testIntBetweenExclusive()
+    {
+        $closure = Ranges::intBetweenExclusive(0, 3);
+        self::assertTrue($closure(2));
+        self::assertFalse($closure('test'));
+        self::assertFalse($closure(1.2));
+        self::assertFalse($closure(false));
+        self::assertFalse($closure([ ]));
+        self::assertFalse($closure('in_array'));
+        self::assertFalse($closure(new stdClass()));
+
+        self::assertFalse($closure(-3));
+        self::assertFalse($closure(-2));
+        self::assertFalse($closure(-1));
+        self::assertFalse($closure(0));
+        self::assertTrue($closure(1));
+        self::assertTrue($closure(2));
+        self::assertFalse($closure(3));
+        self::assertFalse($closure(4));
+        self::assertFalse($closure(5));
+
+        $closure = Ranges::intBetweenExclusive(-2, 2);
+        self::assertFalse($closure(-3));
+        self::assertFalse($closure(-2));
+        self::assertTrue($closure(-1));
+        self::assertTrue($closure(0));
+        self::assertTrue($closure(1));
+        self::assertFalse($closure(2));
+        self::assertFalse($closure(3));
+        self::assertFalse($closure(4));
+        self::assertFalse($closure(5));
+    }
+
 	public function testFloatBetween()
 	{
 		$closure = Ranges::floatBetween(0.0, 3.0);
@@ -121,6 +154,46 @@ class RangesTest extends TestCase
 		self::assertFalse($closure(4.0));
 		self::assertFalse($closure(5.0));
 	}
+
+    public function testFloatBetweenExclusive()
+    {
+        $closure = Ranges::floatBetweenExclusive(0.0, 3.0);
+        self::assertFalse($closure(2));
+        self::assertFalse($closure('test'));
+        self::assertTrue($closure(1.2));
+        self::assertFalse($closure(false));
+        self::assertFalse($closure([ ]));
+        self::assertFalse($closure('in_array'));
+        self::assertFalse($closure(new stdClass()));
+
+        self::assertFalse($closure(-3.0));
+        self::assertFalse($closure(-2.0));
+        self::assertFalse($closure(-1.0));
+        self::assertFalse($closure(0.0));
+        self::assertTrue($closure(0.1));
+        self::assertTrue($closure(1.0));
+        self::assertTrue($closure(2.0));
+        self::assertTrue($closure(2.9));
+        self::assertFalse($closure(3.0));
+        self::assertFalse($closure(3.1));
+        self::assertFalse($closure(4.0));
+        self::assertFalse($closure(5.0));
+
+        $closure = Ranges::floatBetweenExclusive(-2.0, 2.0);
+        self::assertFalse($closure(-3.0));
+        self::assertFalse($closure(-2.1));
+        self::assertFalse($closure(-2.0));
+        self::assertTrue($closure(-1.9));
+        self::assertTrue($closure(-1.0));
+        self::assertTrue($closure(0.0));
+        self::assertTrue($closure(1.0));
+        self::assertTrue($closure(1.9));
+        self::assertFalse($closure(2.0));
+        self::assertFalse($closure(2.1));
+        self::assertFalse($closure(3.0));
+        self::assertFalse($closure(4.0));
+        self::assertFalse($closure(5.0));
+    }
 
 	public function testEnum()
 	{
