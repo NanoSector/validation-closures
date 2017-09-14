@@ -65,4 +65,21 @@ class Utils
 
 		return true;
 	}
+
+    /**
+     * @param callable $callable
+     *
+     * @return \Closure
+     */
+    public static function createClosureFromCallable(callable $callable)
+    {
+        // Closure::fromCallable was introduced in PHP 7.1.0
+        if (version_compare(PHP_VERSION, '7.1.0', '>='))
+            return \Closure::fromCallable($callable);
+        
+        return function ($value) use ($callable)
+        {
+            return $callable($value);
+        };
+	}
 }

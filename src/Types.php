@@ -15,7 +15,7 @@ class Types
 	 */
 	public static function string(): \Closure
 	{
-		return \Closure::fromCallable('is_string');
+		return Utils::createClosureFromCallable('is_string');
 	}
 
 	/**
@@ -23,7 +23,7 @@ class Types
 	 */
 	public static function int(): \Closure
 	{
-		return \Closure::fromCallable('is_int');
+		return Utils::createClosureFromCallable('is_int');
 	}
 
 	/**
@@ -31,7 +31,7 @@ class Types
 	 */
 	public static function float(): \Closure
 	{
-		return \Closure::fromCallable('is_float');
+		return Utils::createClosureFromCallable('is_float');
 	}
 
 	/**
@@ -39,7 +39,7 @@ class Types
 	 */
 	public static function boolean(): \Closure
 	{
-		return \Closure::fromCallable('is_bool');
+		return Utils::createClosureFromCallable('is_bool');
 	}
 
 	/**
@@ -47,7 +47,7 @@ class Types
 	 */
 	public static function array(): \Closure
 	{
-		return \Closure::fromCallable('is_array');
+		return Utils::createClosureFromCallable('is_array');
 	}
 
 	/**
@@ -55,7 +55,7 @@ class Types
 	 */
 	public static function callable(): \Closure
 	{
-		return \Closure::fromCallable('is_callable');
+		return Utils::createClosureFromCallable('is_callable');
 	}
 
 	/**
@@ -63,7 +63,7 @@ class Types
 	 */
 	public static function object(): \Closure
 	{
-		return \Closure::fromCallable('is_object');
+		return Utils::createClosureFromCallable('is_object');
 	}
 
     /**
@@ -71,7 +71,7 @@ class Types
      */
     public static function numeric(): \Closure
     {
-        return \Closure::fromCallable('is_numeric');
+        return Utils::createClosureFromCallable('is_numeric');
 	}
 
 	/**

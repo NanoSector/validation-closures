@@ -67,4 +67,16 @@ class UtilsTest extends TestCase
 		$array = ['string', 'another string', 'a third string', 10];
 		self::assertFalse(Utils::validateArray(\ValidationClosures\Types::string(), $array));
 	}
+
+    public function testCreateClosureFromCallable()
+    {
+        $expected = function ($value)
+        {
+            return is_string($value);
+        };
+        
+        $actual = Utils::createClosureFromCallable('is_string');
+        
+        self::assertEquals($expected, $actual);
+	}
 }
