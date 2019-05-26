@@ -1,8 +1,21 @@
 build:
+    tests:
+        override:
+            - command: vendor/bin/phpunit
+              coverage:
+                  file: /tmp/coverage.xml
+                  format: clover
+
     nodes:
-        php70:
+        tests-php72:
             environment:
-                php: 7.0
-        php71:
+                php: 7.2
+
+        tests-php73:
             environment:
-                php: 7.1
+                php: 7.3
+
+        analysis:
+            tests:
+                override:
+                    - php-scrutinizer-run
