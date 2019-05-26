@@ -8,68 +8,70 @@
 
 namespace ValidationClosures;
 
+use Closure;
+
 class Types
 {
 	/**
-	 * @return \Closure
+	 * @return Closure
 	 */
-	public static function string(): \Closure
+	public static function string(): Closure
 	{
 		return Utils::createClosureFromCallable('is_string');
 	}
 
 	/**
-	 * @return \Closure
+	 * @return Closure
 	 */
-	public static function int(): \Closure
+	public static function int(): Closure
 	{
 		return Utils::createClosureFromCallable('is_int');
 	}
 
 	/**
-	 * @return \Closure
+	 * @return Closure
 	 */
-	public static function float(): \Closure
+	public static function float(): Closure
 	{
 		return Utils::createClosureFromCallable('is_float');
 	}
 
 	/**
-	 * @return \Closure
+	 * @return Closure
 	 */
-	public static function boolean(): \Closure
+	public static function boolean(): Closure
 	{
 		return Utils::createClosureFromCallable('is_bool');
 	}
 
 	/**
-	 * @return \Closure
+	 * @return Closure
 	 */
-	public static function array(): \Closure
+	public static function array(): Closure
 	{
 		return Utils::createClosureFromCallable('is_array');
 	}
 
 	/**
-	 * @return \Closure
+	 * @return Closure
 	 */
-	public static function callable(): \Closure
+	public static function callable(): Closure
 	{
 		return Utils::createClosureFromCallable('is_callable');
 	}
 
 	/**
-	 * @return \Closure
+	 * @return Closure
 	 */
-	public static function object(): \Closure
+	public static function object(): Closure
 	{
 		return Utils::createClosureFromCallable('is_object');
 	}
 
     /**
-     * @return \Closure
+     * @return Closure
      */
-    public static function numeric(): \Closure
+    public static function numeric(): Closure
     {
         return Utils::createClosureFromCallable('is_numeric');
 	}
@@ -77,11 +79,11 @@ class Types
 	/**
 	 * @param string $class
 	 *
-	 * @return \Closure
+	 * @return Closure
 	 */
-	public static function instanceof(string $class): \Closure
+	public static function instanceof(string $class): Closure
 	{
-		return function ($value) use ($class)
+		return static function ($value) use ($class)
 		{
 			return $value instanceof $class;
 		};

@@ -9,20 +9,24 @@
 namespace ValidationClosures;
 
 
+use Closure;
+use InvalidArgumentException;
+
 class Ranges
 {
 	/**
 	 * @param int $minimumLength
 	 * @param int $maximumLength
 	 *
-	 * @return \Closure
+	 * @return Closure
 	 */
-	public static function stringWithLengthBetween(int $minimumLength, int $maximumLength): \Closure
+	public static function stringWithLengthBetween(int $minimumLength, int $maximumLength): Closure
 	{
-		if ($maximumLength < 0 || $maximumLength < 1)
-			throw new \InvalidArgumentException('Minimum length cannot be below 0, maximum length cannot be below 1');
+		if ($maximumLength < 0 || $maximumLength < 1) {
+            throw new InvalidArgumentException('Minimum length cannot be below 0, maximum length cannot be below 1');
+        }
 
-		return function ($value) use ($minimumLength, $maximumLength)
+		return static function ($value) use ($minimumLength, $maximumLength)
 		{
 			return Types::string()($value) && static::intBetween($minimumLength, $maximumLength)(strlen($value));
 		};
@@ -32,14 +36,15 @@ class Ranges
 	 * @param int $minimum
 	 * @param int $maximum
 	 *
-	 * @return \Closure
+	 * @return Closure
 	 */
-	public static function intBetween(int $minimum, int $maximum): \Closure
+	public static function intBetween(int $minimum, int $maximum): Closure
 	{
-        if ($maximum <= $minimum)
-            throw new \InvalidArgumentException('Maximum can not be lesser than or equal to minimum.');
+        if ($maximum <= $minimum) {
+            throw new InvalidArgumentException('Maximum can not be lesser than or equal to minimum.');
+        }
         
-		return function ($value) use ($minimum, $maximum)
+		return static function ($value) use ($minimum, $maximum)
 		{
 			return Types::int()($value) && ($value >= $minimum && $value <= $maximum);
 		};
@@ -49,14 +54,15 @@ class Ranges
      * @param int $minimum
      * @param int $maximum
      *
-     * @return \Closure
+     * @return Closure
      */
-    public static function intBetweenExclusive(int $minimum, int $maximum): \Closure
+    public static function intBetweenExclusive(int $minimum, int $maximum): Closure
     {
-        if ($maximum <= $minimum)
-            throw new \InvalidArgumentException('Maximum can not be lesser than or equal to minimum.');
+        if ($maximum <= $minimum) {
+            throw new InvalidArgumentException('Maximum can not be lesser than or equal to minimum.');
+        }
         
-        return function ($value) use ($minimum, $maximum)
+        return static function ($value) use ($minimum, $maximum)
         {
             return Types::int()($value) && ($value > $minimum && $value < $maximum);
         };
@@ -66,14 +72,15 @@ class Ranges
 	 * @param float $minimum
 	 * @param float $maximum
 	 *
-	 * @return \Closure
+	 * @return Closure
 	 */
-	public static function floatBetween(float $minimum, float $maximum): \Closure
+	public static function floatBetween(float $minimum, float $maximum): Closure
 	{
-        if ($maximum <= $minimum)
-            throw new \InvalidArgumentException('Maximum can not be lesser than or equal to minimum.');
+        if ($maximum <= $minimum) {
+            throw new InvalidArgumentException('Maximum can not be lesser than or equal to minimum.');
+        }
         
-		return function ($value) use ($minimum, $maximum)
+		return static function ($value) use ($minimum, $maximum)
 		{
 			return Types::float()($value) && ($value >= $minimum && $value <= $maximum);
 		};
@@ -83,14 +90,15 @@ class Ranges
      * @param float $minimum
      * @param float $maximum
      *
-     * @return \Closure
+     * @return Closure
      */
-    public static function floatBetweenExclusive(float $minimum, float $maximum): \Closure
+    public static function floatBetweenExclusive(float $minimum, float $maximum): Closure
     {
-        if ($maximum <= $minimum)
-            throw new \InvalidArgumentException('Maximum can not be lesser than or equal to minimum.');
+        if ($maximum <= $minimum) {
+            throw new InvalidArgumentException('Maximum can not be lesser than or equal to minimum.');
+        }
         
-        return function ($value) use ($minimum, $maximum)
+        return static function ($value) use ($minimum, $maximum)
         {
             return Types::float()($value) && ($value > $minimum && $value < $maximum);
         };
@@ -99,11 +107,11 @@ class Ranges
 	/**
 	 * @param array ...$allowedValues
 	 *
-	 * @return \Closure
+	 * @return Closure
 	 */
-	public static function enum(...$allowedValues): \Closure
+	public static function enum(...$allowedValues): Closure
 	{
-		return function ($value) use ($allowedValues)
+		return static function ($value) use ($allowedValues)
 		{
 			return in_array($value, $allowedValues, true);
 		};
@@ -112,11 +120,11 @@ class Ranges
 	/**
 	 * @param array ...$allowedTypes
 	 *
-	 * @return \Closure
+	 * @return Closure
 	 */
-	public static function typeEnum(...$allowedTypes): \Closure
+	public static function typeEnum(...$allowedTypes): Closure
 	{
-		return function ($value) use ($allowedTypes)
+		return static function ($value) use ($allowedTypes)
 		{
 			return in_array(gettype($value), $allowedTypes, true);
 		};
@@ -125,16 +133,17 @@ class Ranges
 	/**
 	 * @param array ...$allowedValues
 	 *
-	 * @return \Closure
+	 * @return Closure
 	 */
-	public static function stringOneOf(...$allowedValues): \Closure
+	public static function stringOneOf(...$allowedValues): Closure
 	{
-		if (!Utils::validateArray(Types::string(), $allowedValues))
-			throw new \InvalidArgumentException('Ranges::stringOneOf expects arguments of type string only');
+		if (!Utils::validateArray(Types::string(), $allowedValues)) {
+            throw new InvalidArgumentException('Ranges::stringOneOf expects arguments of type string only');
+        }
 
-		return function ($value) use ($allowedValues)
+		return static function ($value) use ($allowedValues)
 		{
-			return Types::string() && in_array($value, $allowedValues);
+			return Types::string() && in_array($value, $allowedValues, true);
 		};
 	}
 }

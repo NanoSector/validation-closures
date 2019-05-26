@@ -9,6 +9,11 @@
 
 namespace ValidationClosures;
 
+use Closure;
+use InvalidArgumentException;
+use ReflectionClass;
+use ReflectionException;
+
 /**
  * Class Reflection
  * @package ValidationClosures
@@ -36,34 +41,38 @@ namespace ValidationClosures;
  */
 class Reflection
 {
-	/**
-	 * @param string $class
-	 *
-	 * @return \ReflectionClass
-	 */
-	public static function createReflectionObject(string $class): \ReflectionClass
+    /**
+     * @param string $class
+     *
+     * @return ReflectionClass
+     * @throws ReflectionException
+     */
+	public static function createReflectionObject(string $class): ReflectionClass
 	{
-		if (!class_exists($class))
-			throw new \InvalidArgumentException('The given class does not exist');
+		if (!class_exists($class)) {
+            throw new InvalidArgumentException('The given class does not exist');
+        }
 
-		return new \ReflectionClass($class);
+		return new ReflectionClass($class);
 	}
 
 	/**
 	 * @param string $method
 	 * @param array $arguments
 	 *
-	 * @return \Closure
+	 * @return Closure
 	 */
-	public static function __callStatic(string $method, array $arguments): \Closure
+	public static function __callStatic(string $method, array $arguments): Closure
 	{
-		if (!method_exists(\ReflectionClass::class, $method))
-			throw new \InvalidArgumentException('Cannot create closure from method ReflectionClass::' . $method . ', it does not exist');
+		if (!method_exists(ReflectionClass::class, $method)) {
+            throw new InvalidArgumentException('Cannot create closure from method ReflectionClass::' . $method . ', it does not exist');
+        }
 
-		return function ($value) use ($method, $arguments)
+		return static function ($value) use ($method, $arguments)
 		{
-			if (!Types::string()($value))
-				return false;
+			if (!Types::string()($value)) {
+                return false;
+            }
 
 			$reflection = static::createReflectionObject($value);
 
